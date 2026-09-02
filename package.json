@@ -1,0 +1,23 @@
+{
+  "name": "computersecurity-lab1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BZBro-Student/ComputerSecurity-Lab1.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BZBro-Student/ComputerSecurity-Lab1/issues"
+  },
+  "homepage": "https://github.com/BZBro-Student/ComputerSecurity-Lab1#readme",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "express": "^5.2.1"
+  }
+}
