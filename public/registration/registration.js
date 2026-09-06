@@ -37,8 +37,8 @@ async function validateRegistration() {
     }
 
     if (newPassword === newPasswordagain) {
-        sessionStorage.setItem('username', user);
-        sessionStorage.setItem('password', newPassword);
+        sessionStorage.setItem('username', user)
+        sessionStorage.setItem('password', newPassword)
         return true;
     } else {
         console.warn(newPassword)
@@ -55,7 +55,7 @@ async function securityNext() {
     }
 }
 
-function validateSecurity() {
+async function validateSecurity() {
     let questionOne = document.getElementById('security1')?.value?.trim();
     let questionTwo = document.getElementById('security2')?.value?.trim();
     let questionThree = document.getElementById('security3')?.value?.trim();
@@ -81,21 +81,20 @@ function validateSecurity() {
     userInfo.answerTwo = answerTwo;
     userInfo.answerThree = answerThree;
 
-    fetch('http://localhost:3000/data', {
+    const response = await fetch('http://localhost:3000/data', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(userInfo)
-    })
-        .then(response => response.json())
-        .then(result => console.log('Server response:', result))
-        .then(result => console.log('Server response:', result))
+    });
+    const result = await response.json();
+    console.log('Server response:', result);
     return true;
 }
 
-function completeRegistration() {
-    if (validateSecurity()) {
+async function completeRegistration() {
+    if (await validateSecurity()) {
         sessionStorage.clear()
         window.location.href = "/index.html";
     }
