@@ -15,6 +15,15 @@ app.listen(PORT, () => {
 
 //SQL functions
 
+async function getPassword(username) {
+  const stmt = database.prepare(`
+    SELECT password
+    FROM data
+    WHERE username = ?`)
+  const result = stmt.get(username)
+  return result ? result.password : null;
+}
+
 async function getQuestion(username) {
   const stmt = database.prepare(`
     SELECT questionOne, questionTwo, questionThree, answerOne, answerTwo, answerThree
@@ -125,8 +134,8 @@ app.post('/passwordset', async (req, res) => {
       return res.status(400).json({ error: 'Missing security answers' });
     }
     const isMatch1 = await bcrypt.compare(answers[0].toLowerCase(), userData.answerOne);
-    const isMatch2 = await bcrypt.compare(answers[1].toLowerCase(), userData.answerOne);
-    const isMatch3 = await bcrypt.compare(answers[2].toLowerCase(), userData.answerOne);
+    const isMatch2 = await bcrypt.compare(answers[1].toLowerCase(), userData.answerTwo);
+    const isMatch3 = await bcrypt.compare(answers[2].toLowerCase(), userData.answerThree);
 
     if (isMatch1 && isMatch2 && isMatch3) {
       const success = await setPassword(username, newPassword);
@@ -141,4 +150,19 @@ app.post('/passwordset', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'User failed' });
   };
+});
+
+app.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const hashPassword = await getPassword(username);
+    const isMatch = await bcrypt.compare(password, hashPassword);
+    if (isMatch) {
+      return res.status(200).json({ message: 'Password Match' })
+    } else {
+      return res.status(401).json({ error: 'Password not Matched' })
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Login Failed'})
+  }
 });

@@ -24,11 +24,6 @@ async function validateReset() {
     const isUnique = await checkIfUnique()
     if (!isUnique) {
 
-        if (!user || !newPassword) {
-            alert("Both Username and Password must not be empty");
-            return false;
-        }
-
         if (newPassword.length < 15) {
             alert("Password must be 15 characters or more");
             return false;
