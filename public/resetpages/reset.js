@@ -49,9 +49,7 @@ async function validateReset() {
 async function questionNext() {
        
        const cont = await validateReset()
-       alert(String(cont))
     if (cont) {
-        alert("The button is connected!");
         window.location.href = "/resetpages/security.html"
     }
 }
