@@ -3,34 +3,77 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Local Static Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Registration - Step 2</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="./registration.js" defer></script>
 </head>
 
 <body>
-    <div class="Header">
-        <h1>Lab 1 - Computer Security Reset Screen</h1>
-    </div>
-    <div class="Login">
-        <h2>Please create 3 short security questions:</h2>
-        <label for="security1">Security Question 1:</label>
-        <input type="text" id="security1" maxlength="200">   
-        <label for="answer1">Answer 1:</label>
-        <input type="text" id="answer1">
-        <label for="security2">Security Question 2:</label>
-        <input type="text" id="security2" maxlength="200">
-        <label for="answer2">Answer 2:</label>
-        <input type="text" id="answer2">
-        <label for="security3">Security Question 3:</label>   
-        <input type="text" id="security3" maxlength="200">  
-        <label for="answer3">Answer 3:</label>
-        <input type="text" id="answer3">
-        <button type="button" onclick="completeRegistration()">Finish</button>
-        <div class = "pagelinks">
+    <header class="Header">
+        <h1>Lab 1 - Computer Security Registration Screen</h1>
+    </header>
+
+    <main class="Login">
+        <h2>Set Credentials & Security Questions</h2>
+
+        <form id="registerStep2Form" class="userpass">
+            <div>
+                <label for="newpassword">New Password:</label>
+                <input 
+                    type="password" 
+                    id="newpassword" 
+                    name="newpassword" 
+                    autocomplete="new-password" 
+                    required 
+                    minlength="15" 
+                    placeholder="New Password (min 15 chars)"
+                >
+            </div>
+
+            <div>
+                <label for="checknewpassword">New Password Again:</label>
+                <input 
+                    type="password" 
+                    id="checknewpassword" 
+                    name="checknewpassword" 
+                    autocomplete="new-password" 
+                    required 
+                    minlength="15" 
+                    placeholder="Confirm New Password"
+                >
+            </div>
+
+            <hr>
+
+            <div class="question-group">
+                <label for="security1">Security Question 1:</label>
+                <input type="text" id="security1" name="security1" required maxlength="200" placeholder="Question 1">
+                <label for="answer1">Answer 1:</label>
+                <input type="text" id="answer1" name="answer1" required placeholder="Answer 1">
+            </div>
+
+            <div class="question-group">
+                <label for="security2">Security Question 2:</label>
+                <input type="text" id="security2" name="security2" required maxlength="200" placeholder="Question 2">
+                <label for="answer2">Answer 2:</label>
+                <input type="text" id="answer2" name="answer2" required placeholder="Answer 2">
+            </div>
+
+            <div class="question-group">
+                <label for="security3">Security Question 3:</label>
+                <input type="text" id="security3" name="security3" required maxlength="200" placeholder="Question 3">
+                <label for="answer3">Answer 3:</label>
+                <input type="text" id="answer3" name="answer3" required placeholder="Answer 3">
+            </div>
+
+            <button type="submit">Finish Registration</button>
+        </form>
+
+        <nav class="pagelinks">
             <a href="/index.html">Home</a>
-        </div>
-    </div>
-    <script src="./registration.js" defer></script>
+        </nav>
+    </main>
 </body>
 
 </html>

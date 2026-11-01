@@ -1,101 +1,91 @@
-let userInfo = { username: "", password: "", questionOne: "", questionTwo: "", questionThree: "", answerOne: "", answerTwo: "", answerThree: "" }
+document.addEventListener('DOMContentLoaded', () => {
+    const step1Form = document.getElementById('registerStep1Form');
+    const step2Form = document.getElementById('registerStep2Form');
 
-async function checkIfUnique() {
-    let user = document.getElementById('username')?.value.trim();
-    const response = await fetch('http://localhost:3000/usercheck', {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user })
-    })
-    const data = await response.json();
-    return data.unique
-}
-
-async function validateRegistration() {
-    let user = document.getElementById('username')?.value.trim();
-    let newPassword = document.getElementById('newpassword')?.value.trim();
-    let newPasswordagain = document.getElementById('checknewpassword')?.value.trim();
-
-
-
-    if (user == '' || newPassword == '') {
-        alert("Both Username and Password must not be empty");
-        return false;
+    if (step1Form) {
+        step1Form.addEventListener('submit', handleStep1Submit);
     }
 
-    const isUnique = await checkIfUnique();
-    if (!isUnique) {
-        alert("Username already in use")
-        return false;
+    if (step2Form) {
+        if (!sessionStorage.getItem('registrationUsername')) {
+            window.location.href = '/registration/registration.html';
+            return;
+        }
+        step2Form.addEventListener('submit', handleStep2Submit);
+    }
+});
+
+function handleStep1Submit(event) {
+    event.preventDefault();
+    const usernameInput = document.getElementById('username')?.value.trim();
+
+    if (!usernameInput) {
+        alert('Please enter a valid username.');
+        return;
+    }
+
+    sessionStorage.setItem('registrationUsername', usernameInput);
+    window.location.href = '/registration/question.html';
+}
+
+async function handleStep2Submit(event) {
+    event.preventDefault();
+
+    const username = sessionStorage.getItem('registrationUsername');
+    const newPassword = document.getElementById('newpassword')?.value;
+    const confirmPassword = document.getElementById('checknewpassword')?.value;
+
+    const questionOne = document.getElementById('security1')?.value.trim();
+    const answerOne = document.getElementById('answer1')?.value.trim();
+    const questionTwo = document.getElementById('security2')?.value.trim();
+    const answerTwo = document.getElementById('answer2')?.value.trim();
+    const questionThree = document.getElementById('security3')?.value.trim();
+    const answerThree = document.getElementById('answer3')?.value.trim();
+
+    if (!username) {
+        alert('Session expired. Please restart registration.');
+        window.location.href = '/registration/registration.html';
+        return;
     }
 
     if (newPassword.length < 15) {
-        alert("Password must be 15 characters or more");
-        return false;
+        alert('Password must be at least 15 characters long.');
+        return;
     }
 
-    if (newPassword === newPasswordagain) {
-        sessionStorage.setItem('username', user)
-        sessionStorage.setItem('password', newPassword)
-        return true;
-    } else {
-        console.warn(newPassword)
-        console.warn(newPasswordagain)
-        console.warn("WHAT")
-        alert("Passwords do not match");
-        return false;
-    }
-}
-
-async function securityNext() {
-    if (await validateRegistration()) {
-        window.location.href = "/registration/question.html";
-    }
-}
-
-async function validateSecurity() {
-    let questionOne = document.getElementById('security1')?.value?.trim();
-    let questionTwo = document.getElementById('security2')?.value?.trim();
-    let questionThree = document.getElementById('security3')?.value?.trim();
-    let answerOne = document.getElementById('answer1')?.value?.trim();
-    let answerTwo = document.getElementById('answer2')?.value?.trim();
-    let answerThree = document.getElementById('answer3')?.value?.trim();
-
-    if (!questionOne || !questionTwo || !questionThree) {
-        console.warn("You must make 3 questions!");
-        return false;
-    }
-    if (!answerOne || !answerTwo || !answerThree) {
-        console.warn("You must answer all questions");
-        return false;
+    if (newPassword !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
     }
 
-    userInfo.username = sessionStorage.getItem('username')
-    userInfo.password = sessionStorage.getItem('password')
-    userInfo.questionOne = questionOne;
-    userInfo.questionTwo = questionTwo;
-    userInfo.questionThree = questionThree;
-    userInfo.answerOne = answerOne;
-    userInfo.answerTwo = answerTwo;
-    userInfo.answerThree = answerThree;
+    if (!questionOne || !questionTwo || !questionThree || !answerOne || !answerTwo || !answerThree) {
+        alert('All security questions and answers must be filled out.');
+        return;
+    }
 
-    const response = await fetch('http://localhost:3000/data', {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userInfo)
-    });
-    const result = await response.json();
-    console.log('Server response:', result);
-    return true;
-}
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                username,
+                password: newPassword,
+                questions: [questionOne, questionTwo, questionThree],
+                answers: [answerOne, answerTwo, answerThree]
+            })
+        });
 
-async function completeRegistration() {
-    if (await validateSecurity()) {
-        sessionStorage.clear()
-        window.location.href = "/index.html";
+        const result = await response.json();
+
+        if (response.ok) {
+            sessionStorage.removeItem('registrationUsername');
+            alert('Registration successful! Please log in.');
+            window.location.href = '/index.html';
+        } else {
+            alert(result.error || 'Registration failed. Please try a different username.');
+        }
+    } catch (error) {
+        alert('Network error. Please try again later.');
     }
 }

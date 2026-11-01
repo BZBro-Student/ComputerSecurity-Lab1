@@ -3,30 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Local Static Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - Step 1</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="./reset.js" defer></script>
 </head>
 
 <body>
-    <div class="Header">
+    <header class="Header">
         <h1>Lab 1 - Computer Security Reset Screen</h1>
-    </div>
-    <div class="Login">
-        <h1>Please Reset</h1>
-        <div class="userpass">
+    </header>
+
+    <main class="Login">
+        <h1>Reset Password</h1>
+
+        <form id="resetStep1Form" class="userpass">
+            <div>
                 <label for="username">Username:</label>
-                <input type="text" id="username" placeholder="Username">
-                <label for="newpassword">New Password:</label>
-                <input type="password" id="newpassword" placeholder="New Password">
-                <label for="checknewpassword">New Password Again:</label>
-                <input type="password" id="checknewpassword" placeholder="New Password Again">
-                <button type="button" onclick="questionNext()">Submit</button>
-        </div>
-        <div class = "pagelinks">
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    autocomplete="username" 
+                    required 
+                    placeholder="Enter your username"
+                >
+            </div>
+            <button type="submit">Next</button>
+        </form>
+
+        <nav class="pagelinks">
             <a href="/index.html">Home</a>
-        </div>
-    </div>
-    <script src="./reset.js" defer></script>
+        </nav>
+    </main>
 </body>
 
 </html>

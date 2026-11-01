@@ -3,30 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Local Static Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Registration - Step 1</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="./registration.js" defer></script>
 </head>
 
 <body>
-    <div class="Header">
+    <header class="Header">
         <h1>Lab 1 - Computer Security Registration Screen</h1>
-    </div>
-    <div class="Login">
+    </header>
+
+    <main class="Login">
         <h1>Please Register</h1>
-        <div class="userpass">
+
+        <form id="registerStep1Form" class="userpass">
+            <div>
                 <label for="username">New Username:</label>
-                <input type="text" id="username" placeholder="New Username">
-                <label for="newpassword">New Password:</label>
-                <input type="password" id="newpassword" placeholder="New Password" minlength="15" required>
-                <label for="checknewpassword" minlength="15">New Password Again:</label>
-                <input type="password" id="checknewpassword" placeholder="New Password Again">
-                <button onclick="securityNext()">Submit</button>
-        </div>
-        <div class = "pagelinks">
-            <a href = "/index.html">Home</a>
-        </div>
-    </div>
-    <script src="./registration.js" defer></script>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    autocomplete="username" 
+                    required 
+                    placeholder="Choose a Username"
+                >
+            </div>
+            <button type="submit">Next</button>
+        </form>
+
+        <nav class="pagelinks">
+            <a href="/index.html">Home</a>
+        </nav>
+    </main>
 </body>
 
 </html>

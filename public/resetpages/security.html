@@ -3,34 +3,74 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Local Static Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - Step 2</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="./reset.js" defer></script>
 </head>
 
 <body>
-    <div class="Header">
+    <header class="Header">
         <h1>Lab 1 - Computer Security Reset Screen</h1>
-    </div>
-    <div class="Login">
-        <h2>Please answer 3 short security questions:</h2>
-    
-        <p id="question1"></p>
-        <label for="security1">Answer 1:</label>
-        <input type="text" id="security1" placeholder="Enter answer 1">
-        <p id="question2"></p>
-        <label for="security2">Answer 2:</label>
-        <input type="text" id="security2" placeholder="Enter answer 2">
-        <p id="question3"></p>
-        <label for="security3">Answer 3:</label>   
-        <input type="text" id="security3" placeholder="Enter answer 3">   
+    </header>
 
-        <button type="button" onclick="finishReset()">Submit</button>
+    <main class="Login">
+        <h2>Security Verification</h2>
 
-        <div class="pagelinks">
+        <form id="resetStep2Form" class="userpass">
+            <div class="question-group">
+                <p id="question1">Loading question 1...</p>
+                <label for="security1">Answer 1:</label>
+                <input type="text" id="security1" name="security1" required placeholder="Enter answer 1">
+            </div>
+
+            <div class="question-group">
+                <p id="question2">Loading question 2...</p>
+                <label for="security2">Answer 2:</label>
+                <input type="text" id="security2" name="security2" required placeholder="Enter answer 2">
+            </div>
+
+            <div class="question-group">
+                <p id="question3">Loading question 3...</p>
+                <label for="security3">Answer 3:</label>
+                <input type="text" id="security3" name="security3" required placeholder="Enter answer 3">
+            </div>
+
+            <hr>
+
+            <div>
+                <label for="newpassword">New Password:</label>
+                <input 
+                    type="password" 
+                    id="newpassword" 
+                    name="newpassword" 
+                    autocomplete="new-password" 
+                    required 
+                    minlength="15" 
+                    placeholder="New Password (min 15 chars)"
+                >
+            </div>
+
+            <div>
+                <label for="checknewpassword">Confirm New Password:</label>
+                <input 
+                    type="password" 
+                    id="checknewpassword" 
+                    name="checknewpassword" 
+                    autocomplete="new-password" 
+                    required 
+                    minlength="15" 
+                    placeholder="Confirm New Password"
+                >
+            </div>
+
+            <button type="submit">Submit Reset</button>
+        </form>
+
+        <nav class="pagelinks">
             <a href="/index.html">Home</a>
-        </div>
-    </div>
-    <script src="./reset.js" defer></script>
+        </nav>
+    </main>
 </body>
 
 </html>

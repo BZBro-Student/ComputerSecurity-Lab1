@@ -3,33 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local Static Site</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="login.js" defer></script>
 </head>
 
 <body>
-    <div class="Header">
-        <h1>Lab 1 - Computer Security Login Screen</h1>
-    </div>
-    <div class="Login">
+    <header class="Header">
+        <h1>Lab 4 - Computer Security Login Screen</h1>
+    </header>
+
+    <main class="Login">
         <h1>Please Login</h1>
-        <div class="userpass">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" placeholder="Username">
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="password">
-            </div>
-            <button type="button" onclick="completeLogin()">Submit</button>
-        </div>
-        <div class="pagelinks">
-            <a href="resetpages/reset.html">Reset Password<a>
-            <a href="registration/registration.html">Register Account<a>
-        </div>
+        
+ <form id="loginForm" class="userpass" method="POST" action="#">
+    <div>
+        <label for="username">Username:</label>
+        <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            autocomplete="username" 
+            required 
+            placeholder="Username"
+        >
     </div>
-    <script src="login.js" defer></script>
+    <div>
+        <label for="password">Password:</label>
+        <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            autocomplete="current-password" 
+            required 
+            placeholder="Password"
+        >
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+        <nav class="pagelinks">
+            <a href="resetpages/reset.html">Reset Password</a>
+            <a href="registration/registration.html">Register Account</a>
+        </nav>
+    </main>
 </body>
 
 </html>
